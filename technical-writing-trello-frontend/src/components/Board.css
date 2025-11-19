@@ -1,0 +1,89 @@
+.board {
+  padding: 16px;
+}
+.lists {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  overflow-x: auto;
+}
+.list-dropzone {
+  min-width: 260px;
+}
+.list {
+  background: #f4f5f7;
+  border-radius: 6px;
+  padding: 8px;
+  width: 260px;
+  box-shadow: 0 1px 0 rgba(9,30,66,.25);
+}
+.list-title {
+  font-size: 16px;
+  margin: 0 0 8px 0;
+}
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #6b778c;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+.delete-btn:hover {
+  background: rgba(0,0,0,0.06);
+}
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 20px;
+}
+.card-item {
+  background: #fff;
+  padding: 6px;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(9,30,66,.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-content {
+  cursor: grab;
+}
+.card-delete {
+  background: transparent;
+  border: none;
+  color: #6b778c;
+  font-size: 14px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.card-delete:hover { background: rgba(0,0,0,0.06); }
+.add-card, .add-list {
+  margin-top: 8px;
+  display: flex;
+  gap: 6px;
+}
+.add-list input, .add-card input {
+  flex: 1;
+  padding: 6px;
+  border-radius: 3px;
+  border: 1px solid #dfe1e6;
+}
+.add-list button, .add-card button {
+  padding: 6px 8px;
+  border-radius: 3px;
+  border: none;
+  background: #5aac44;
+  color: #fff;
+  cursor: pointer;
+}
