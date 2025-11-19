@@ -8,24 +8,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
         body {
-            margin: 0;
+            margin: 4px;
+            width: fit-content;
+            padding-right: 4px;
+            --text: #f1fef7;
+            --background: #021209;
+            --primary: #14e66f;
+            --secondary: #0b2e7f;
+            --accent: #2110b7;
         }
 
         .category-container {
             display: flex;
             flex-direction: row;
-            min-height: 10em;
             gap: 8px;
-            margin: 4px;
+            overflow: scroll;
+            height: 100%;
         }
 
         .category {
             display: flex;
             flex-direction: column;
-            background-color: blue;
-            width: 100px;
+            background-color: var(--background);
+            color: var(--text);
             padding: 8px;
             box-sizing: border-box;
+            min-width: calc(100vw / 7);
         }
 
         .category-title {
@@ -39,11 +47,60 @@
 <div class="category-container">
     <div class="category">
         <span class="category-title">Title 1</span>
-        <span>Content 1</span>
-        <span>Content 2</span>
-        <span>Content 3</span>
+        <span><input type="checkbox" name="Content 1" id="1"> Content 1</span>
+        <span><input type="checkbox" name="Content 2" id="2"> Content 2</span>
+        <span><input type="checkbox" name="Content 3" id="3"> Content 3</span>
+        <span><input type="checkbox" name="Content 4" id="4"> Content 4</span>
     </div>
-
+    <div class="category">
+        <span class="category-title">Title 1</span>
+        <span><input type="checkbox" name="Content 1" id="1"> Content 1</span>
+        <span><input type="checkbox" name="Content 2" id="2"> Content 2</span>
+        <span><input type="checkbox" name="Content 3" id="3"> Content 3</span>
+        <span><input type="checkbox" name="Content 4" id="4"> Content 4</span>
+    </div>
+    <div class="category">
+        <span class="category-title">Title 1</span>
+        <span><input type="checkbox" name="Content 1" id="1"> Content 1</span>
+        <span><input type="checkbox" name="Content 2" id="2"> Content 2</span>
+        <span><input type="checkbox" name="Content 3" id="3"> Content 3</span>
+        <span><input type="checkbox" name="Content 4" id="4"> Content 4</span>
+    </div>
+    <div class="category">
+        <span class="category-title">Title 1</span>
+        <span><input type="checkbox" name="Content 1" id="1"> Content 1</span>
+        <span><input type="checkbox" name="Content 2" id="2"> Content 2</span>
+        <span><input type="checkbox" name="Content 3" id="3"> Content 3</span>
+        <span><input type="checkbox" name="Content 4" id="4"> Content 4</span>
+    </div>
+    <div class="category">
+        <span class="category-title">Title 1</span>
+        <span><input type="checkbox" name="Content 1" id="1"> Content 1</span>
+        <span><input type="checkbox" name="Content 2" id="2"> Content 2</span>
+        <span><input type="checkbox" name="Content 3" id="3"> Content 3</span>
+        <span><input type="checkbox" name="Content 4" id="4"> Content 4</span>
+    </div>
+    <div class="category">
+        <span class="category-title">Title 1</span>
+        <span><input type="checkbox" name="Content 1" id="1"> Content 1</span>
+        <span><input type="checkbox" name="Content 2" id="2"> Content 2</span>
+        <span><input type="checkbox" name="Content 3" id="3"> Content 3</span>
+        <span><input type="checkbox" name="Content 4" id="4"> Content 4</span>
+    </div>
+    <div class="category">
+        <span class="category-title">Title 1</span>
+        <span><input type="checkbox" name="Content 1" id="1"> Content 1</span>
+        <span><input type="checkbox" name="Content 2" id="2"> Content 2</span>
+        <span><input type="checkbox" name="Content 3" id="3"> Content 3</span>
+        <span><input type="checkbox" name="Content 4" id="4"> Content 4</span>
+    </div>
+    <div class="category">
+        <span class="category-title">Title 1</span>
+        <span><input type="checkbox" name="Content 1" id="1"> Content 1</span>
+        <span><input type="checkbox" name="Content 2" id="2"> Content 2</span>
+        <span><input type="checkbox" name="Content 3" id="3"> Content 3</span>
+        <span><input type="checkbox" name="Content 4" id="4"> Content 4</span>
+    </div>
 </div>
 </body>
 </html>
