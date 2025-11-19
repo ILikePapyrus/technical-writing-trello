@@ -26,7 +26,7 @@ Fornire uno strumento di gestione delle attività leggero, veloce e affidabile, 
 
 Il progetto sarà sviluppato come un'applicazione a tre livelli (Three-Tier Architecture).
 
-![Image of Architettura a 3 livelli][image1]
+![Image of Architettura a 3 livelli.jpg](Image%20of%20Architettura%20a%203%20livelli.jpg)
 
 Getty Images
 
