@@ -19,6 +19,7 @@ function AppShell() {
         {isAuthenticated() && (
           <button className="btn btn-sm btn-outline-secondary" onClick={handleLogout}>Logout</button>
         )}
+        <h1>Tablero</h1>
       </header>
       <main>
         <Routes>
