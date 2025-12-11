@@ -14,12 +14,11 @@ function AppShell() {
 
   return (
     <div className="app-root">
-      <header className="app-header">
+        <header className="app-header">
         <h1>Mini Trello — Tablero</h1>
         {isAuthenticated() && (
           <button className="btn btn-sm btn-outline-secondary" onClick={handleLogout}>Logout</button>
         )}
-        <h1>Tablero</h1>
       </header>
       <main>
         <Routes>
