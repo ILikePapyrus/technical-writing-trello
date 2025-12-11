@@ -42,7 +42,7 @@ Getty Images
 
 ### **2.3. Livello Dati (Database)**
 
-* **Tecnologia:** **MySQL**.  
+* **Tecnologia:** **PostgreSQL** (tramite Supabase).  
 * **Funzione:** Archiviazione persistente di tutti i dati applicativi (Utenti, Board, List, Card, Commenti).
 
 ## **3\. Funzionalità (Minimum Viable Product \- MVP)**
