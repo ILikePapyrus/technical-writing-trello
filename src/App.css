@@ -56,7 +56,6 @@ code {
 
 main {
   flex: 1;
-  background: #0079bf22;
 }
 
 .card {
@@ -65,4 +64,13 @@ main {
 
 .read-the-docs {
   color: #888;
+}
+
+.login-container {
+  background-color: #0079bf22;
+  padding: 32px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
 }

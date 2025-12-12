@@ -59,7 +59,7 @@ export default function Login() {
   return (
       <div className="login-container" style={{maxWidth: 420, margin: '2rem auto'}}>
         <h2>Login</h2>
-        <form onSubmit={handleSignUp}>
+        <form onSubmit={handleSignUp} style={{ display: 'grid', gap: 10 }}>
           <div className="mb-3">
             <label className="form-label">Nome</label>
             <input className="form-control" value={name} onChange={(e) => setName(e.target.value)} placeholder="Mario Rossi"/>
