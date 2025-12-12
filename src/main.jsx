@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import App from './App';
 import './supabaseClient.js';
-import './index.css'
+import './index.css';
 
 const container = document.getElementById('root');
 const root = createRoot(container);

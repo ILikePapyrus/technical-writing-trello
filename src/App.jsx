@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { supabase } from './supabaseClient';
 import Login from './components/Login';
 import Board from './components/Board';
+import '/src/App.css';
 
 export default function App() {
     const [authed, setAuthed] = useState(false);
