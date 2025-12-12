@@ -47,9 +47,7 @@ L'applicazione deve essere: - scalabile\
 
 ## 3.2 Database
 
--   **MySQL 8+**
--   Engine: **InnoDB**
--   Supporto a row‑level locking tramite **SELECT ... FOR UPDATE**
+- Supabase (PostgreSQL)
 
 ## 3.3 Caching e Locking
 
@@ -60,8 +58,8 @@ L'applicazione deve essere: - scalabile\
 
 ## 3.4 Deploy
 
--   Docker\
--   Kubernetes o Docker Compose\
+-   Docker (possibile tipo di deployment in futuro)
+-   Kubernetes o Docker Compose
 -   Reverse Proxy: Nginx/Traefik
 
 ## 3.5 Observability
@@ -80,10 +78,8 @@ L'applicazione deve essere: - scalabile\
     Load Balancer / Reverse Proxy
            ↓
     Node.js (Express API)
-           ↓        ↘
-       MySQL       Redis (cache, locks)
-           ↑
-    Background Workers (BullMQ)
+           ↓
+        Supabase
 
 ------------------------------------------------------------------------
 
@@ -181,7 +177,7 @@ CREATE TABLE users (
   email VARCHAR(255) NOT NULL UNIQUE,
   name VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
+)
 ```
 
 ## 7.2 Boards
@@ -195,7 +191,7 @@ CREATE TABLE boards (
   is_archived BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-) ENGINE=InnoDB;
+)
 ```
 
 ## 7.3 Lists
@@ -208,7 +204,7 @@ CREATE TABLE lists (
   position FLOAT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (board_id) REFERENCES boards(id) ON DELETE CASCADE
-) ENGINE=InnoDB;
+)
 ```
 
 ## 7.4 Cards
@@ -224,7 +220,7 @@ CREATE TABLE cards (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (list_id) REFERENCES lists(id) ON DELETE CASCADE,
   FOREIGN KEY (assigned_user_id) REFERENCES users(id)
-) ENGINE=InnoDB;
+)
 ```
 
 ------------------------------------------------------------------------
