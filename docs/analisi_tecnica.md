@@ -109,9 +109,6 @@ Funzionalità: - creare board - ottenere board per utente - rinominare -
 soft delete (`is_archived = TRUE`) - condivisione semplice (MVP:
 ownership singola)
 
-### Query principali
-
--   `SELECT * FROM boards WHERE user_id = ? AND is_archived = 0;`
 
 ------------------------------------------------------------------------
 
@@ -135,13 +132,6 @@ massivo) 2. floating position (es: 1.0, 1.5, 2.0) 3. sistema a spazi
 Funzionalità: - creare card - aggiornare titolo e descrizione -
 riordinamento intra-lista - spostamento inter‑lista - assegnazione card
 
-### Transazione richiesta:
-
-    START TRANSACTION;
-    UPDATE cards SET list_id=?, position=? WHERE id=?;
-    -- Shift positions if needed
-    COMMIT;
-
 ------------------------------------------------------------------------
 
 # 6. Flussi Critici del Sistema
@@ -157,7 +147,7 @@ riordinamento intra-lista - spostamento inter‑lista - assegnazione card
 
 -   validazione payload
 -   controllo permessi utente
--   transazione MySQL
+-   transazione SQL
 -   risposta JSON
 
 ### Error Handling:
@@ -264,7 +254,7 @@ CREATE TABLE cards (
 
 ## 9.2 Ottimizzazioni consigliate
 
--   indicizzazione MySQL su:
+-   indicizzazione QL su:
     -   list_id, position
     -   board_id
     -   user_id
