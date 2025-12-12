@@ -35,13 +35,21 @@ code {
   display: flex;
   flex-direction: column;
 }
+
 .app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
   padding: 4px 16px;
   background: linear-gradient(90deg, #026aa7, #75cdff);
   color: white;
 }
 
 .app-header > h1 {
+  margin-left: .3rem;
   margin-bottom: .3rem;
   font-size: 2.3rem;
 }
