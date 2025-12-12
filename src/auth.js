@@ -1,27 +1,52 @@
-const KEY = 'ttf_auth_user'
+import { supabase } from './supabaseClient';
 
-export function login({ email }) {
-  // en una app real usarías backend; aquí guardamos usuario mínimo
-  const user = { email, token: 'local-token-' + Date.now() }
-  localStorage.setItem(KEY, JSON.stringify(user))
-  return user
+/**
+ * Sign in with email + password
+ * Returns { email, token } on success
+ */
+export async function login({ email, password }) {
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) throw error;
+  return { email: data.user?.email ?? null, token: data.session?.access_token ?? null };
 }
 
-export function logout() {
-  localStorage.removeItem(KEY)
+/**
+ * Sign up with email + password
+ * Assumes email confirmation is disabled and signUp returns a session.
+ * Returns { user, session } or throws
+ */
+export async function signup({ email, password }) {
+  const { data, error } = await supabase.auth.signUp({ email, password });
+  if (error) throw error;
+  return { user: data.user ?? null, session: data.session ?? null };
 }
 
-export function getUser() {
+/**
+ * Logout current session
+ */
+export async function logout() {
+  const { error } = await supabase.auth.signOut();
+  if (error) throw error;
+}
+
+/**
+ * Get current user (async)
+ */
+export async function getUser() {
+  const { data, error } = await supabase.auth.getUser();
+  if (error) return null;
+  return data?.user ?? null;
+}
+
+/**
+ * Synchronous-ish check used by UI: checks localStorage token presence.
+ */
+export function isAuthenticated() {
   try {
-    const raw = localStorage.getItem(KEY)
-    return raw ? JSON.parse(raw) : null
-  } catch (e) {
-    return null
+    return Boolean(localStorage.getItem('supabase.auth.token'));
+  } catch {
+    return false;
   }
 }
 
-export function isAuthenticated() {
-  return !!getUser()
-}
-
-export default { login, logout, getUser, isAuthenticated }
+export default { login, signup, logout, getUser, isAuthenticated };

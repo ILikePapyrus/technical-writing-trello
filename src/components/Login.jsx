@@ -1,59 +1,86 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { login, isAuthenticated } from '../auth'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { login, signup } from '../auth';
+import { createProfileForCurrentUser } from '../profileApi';
 
-function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const navigate = useNavigate()
+export default function Login() {
+  const navigate = useNavigate();
 
-  if (isAuthenticated()) {
-    navigate('/board')
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
+
+  // Sign in handler
+  async function handleSignIn(e) {
+    e.preventDefault();
+    setError(null);
+    setMessage(null);
+    setLoading(true);
+
+    try {
+      await login({ email, password });
+      setMessage('Login effettuato.');
+      navigate('/board');
+    } catch (err) {
+      console.error('handleSignIn error', err);
+      setError(err?.message ?? String(err));
+    } finally {
+      setLoading(false);
+    }
   }
 
-  function submit(e) {
-  e.preventDefault()
-  setError('')
-  const emailTrim = email.trim()
-  const passwordTrim = password.trim()
-  if (!emailTrim || !passwordTrim) {
-    setError('Please enter email and password')
-    return
-  }
+  // Sign up handler (assumes email confirmation disabled)
+  async function handleSignUp(e) {
+    e.preventDefault();
+    setError(null);
+    setMessage(null);
+    setLoading(true);
 
-  // controllo demo: solo queste credenziali sono accettate
-  if (emailTrim === 'admin@example.com' && passwordTrim === 'password123') {
-    login({ email: emailTrim })
-    navigate('/board')
-  } else {
-    setError('Credenziali non valide (usa admin@example.com / password123)')
+    try {
+      const { user, session } = await signup({ email, password });
+
+      // Create profile immediately (session expected when confirmation disabled)
+      await createProfileForCurrentUser(name);
+
+      setMessage('Registrazione completata e profilo creato.');
+      navigate('/board');
+    } catch (err) {
+      console.error('handleSignUp error', err);
+      setError(err?.message ?? String(err));
+    } finally {
+      setLoading(false);
+    }
   }
-}
 
   return (
-    <div className="login-container" style={{maxWidth: 420, margin: '2rem auto'}}>
-      <h2>Login</h2>
-      <form onSubmit={submit}>
-        <div className="mb-3">
-          <label className="form-label">Email</label>
-          <input className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} type="email" />
-        </div>
+      <div className="login-container" style={{maxWidth: 420, margin: '2rem auto'}}>
+        <h2>Login</h2>
+        <form onSubmit={handleSignUp}>
+          <div className="mb-3">
+            <label className="form-label">Nome</label>
+            <input className="form-control" value={name} onChange={(e) => setName(e.target.value)} placeholder="Mario Rossi"/>
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} type="password" />
-        </div>
+          <div className="mb-3">
+            <label className="form-label">Email</label>
+            <input className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="email@example.com" required/>
+          </div>
 
-        {error && <div className="alert alert-danger">{error}</div>}
+          <div className="mb-3">
+            <label className="form-label">Password</label>
+            <input className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" required/>
+          </div>
 
-        <div className="d-flex gap-2">
-          <button className="btn btn-primary" type="submit">Login</button>
-          <button type="button" className="btn btn-secondary" onClick={() => { setEmail('demo@example.com'); setPassword('demo') }}>Fill demo</button>
-        </div>
-      </form>
-    </div>
-  )
+          {error && <div className="alert alert-danger">{error}</div>}
+
+          <div className="d-flex gap-2">
+            <button className="btn btn-primary" type="submit" onClick={handleSignIn} disabled={loading} title="Accedi">Login</button>
+          </div>
+        </form>
+      </div>
+  );
 }
-
-export default Login

@@ -1,42 +1,36 @@
-import './App.css'
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
-import Board from './components/Board'
-import Login from './components/Login'
-import { isAuthenticated, logout } from './auth'
+import React, { useEffect, useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { supabase } from './supabaseClient';
+import Login from './components/Login';
+import Board from './components/Board';
 
-function AppShell() {
-  const navigate = useNavigate()
+export default function App() {
+    const [authed, setAuthed] = useState(false);
 
-  function handleLogout() {
-    logout()
-    navigate('/login')
-  }
+    useEffect(() => {
+        async function check() {
+            const { data } = await supabase.auth.getSession();
+            setAuthed(Boolean(data?.session));
+        }
+        check();
+        const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+            setAuthed(Boolean(session));
+        });
+        return () => sub?.subscription?.unsubscribe?.();
+    }, []);
 
-  return (
-    <div className="app-root">
-        <header className="app-header">
-        <h1>Mini Trello — Tablero</h1>
-        {isAuthenticated() && (
-          <button className="btn btn-sm btn-outline-secondary" onClick={handleLogout}>Logout</button>
-        )}
-      </header>
-      <main>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/board" element={isAuthenticated() ? <Board /> : <Navigate to="/login" replace />} />
-          <Route path="/" element={isAuthenticated() ? <Navigate to="/board" replace /> : <Navigate to="/login" replace />} />
-        </Routes>
-      </main>
-    </div>
-  )
+    return (
+        <div>
+            <header className="app-header">
+                <h1>Mini Trello — Tablero</h1>
+            </header>
+            <main>
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/board" element={authed ? <Board /> : <Navigate to="/login" replace />} />
+                    <Route path="/" element={<Navigate to={authed ? '/board' : '/login'} replace />} />
+                </Routes>
+            </main>
+        </div>
+    );
 }
-
-function App() {
-  return (
-    <BrowserRouter>
-      <AppShell />
-    </BrowserRouter>
-  )
-}
-
-export default App
