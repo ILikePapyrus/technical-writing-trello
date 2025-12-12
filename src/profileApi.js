@@ -1,4 +1,3 @@
-// src/profileApi.js
 import { supabase } from './supabaseClient';
 
 /**
@@ -10,14 +9,18 @@ export async function createProfileForCurrentUser(name) {
     if (userError) return { profile: null, error: userError };
 
     const user = userData?.user ?? null;
-    if (!user || !user.id) return { profile: null, error: new Error('No authenticated user') };
+    if (!user || !user.id) return { profile: null, error: new Error("No authenticated user!")};
+
+    const payload = { auth_id: user.id, email: user.email, name };
 
     const { data, error } = await supabase
         .from('users')
-        .insert([{ auth_id: user.id, email: user.email, name }]);
+        .insert([payload])
+        .select()
+        .single()
 
     if (error) return { profile: null, error };
-    return { profile: data?.[0] ?? null, error: null };
+    return { profile: data, error: null };
 }
 
 /**

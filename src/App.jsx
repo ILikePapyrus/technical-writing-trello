@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { supabase } from './supabaseClient';
 import Login from './components/Login';
 import Board from './components/Board';
+import AuthCallback from './pages/AuthCallback';
 import '/src/App.css';
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
             <main>
                 <Routes>
                     <Route path="/login" element={<Login />} />
+                    <Route path="/auth/callback" element={<AuthCallback />} />
                     <Route path="/board" element={authed ? <Board /> : <Navigate to="/login" replace />} />
                     <Route path="/" element={<Navigate to={authed ? '/board' : '/login'} replace />} />
                 </Routes>

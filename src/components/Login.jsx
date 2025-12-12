@@ -22,7 +22,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      await login({ email, password });
+      const res = await login({ email, password });
       setMessage('Login effettuato.');
       navigate('/board');
     } catch (err) {
@@ -41,13 +41,19 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const { user, session } = await signup({ email, password });
+      const res = await signup({ email, password });
+      console.log('signup result ', res);
 
-      // Create profile immediately (session expected when confirmation disabled)
-      await createProfileForCurrentUser(name);
+      const session = res?.session ?? null;
 
-      setMessage('Registrazione completata e profilo creato.');
-      navigate('/board');
+      if (session) {
+        // Create profile immediately (session expected when confirmation disabled)
+        await createProfileForCurrentUser(name);
+        setMessage('Registrazione completata e profilo creato.');
+        navigate('/board');
+      } else {
+        setMessage('Registration started. Redirecting to complete sign-in...')
+      }
     } catch (err) {
       console.error('handleSignUp error', err);
       setError(err?.message ?? String(err));
@@ -75,12 +81,26 @@ export default function Login() {
             <input className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" required/>
           </div>
 
-          {error && <div className="alert alert-danger">{error}</div>}
-
           <div className="d-flex gap-2">
+            <button className="btn btn-primary" type="submit" disabled={loading} title="Sign-up">Sign-up</button>
+            {/*{loading ? 'Attendi...' : 'Registrati'}*/}
+
             <button className="btn btn-primary" type="submit" onClick={handleSignIn} disabled={loading} title="Accedi">Login</button>
+            {/*{loading ? '...' : 'Log-in'}*/}
           </div>
         </form>
+
+        {message && (
+            <div style={{ marginTop: 12, color: '#0a6', fontWeight: 500 }}>
+              {message}
+            </div>
+        )}
+
+        {error && (
+            <div style={{ marginTop: 12, color: 'crimson' }}>
+              <strong>Error: </strong> {error}
+            </div>
+        )}
       </div>
   );
 }
